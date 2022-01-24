@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  wordle-front:
+    container_name: wordle-front
+    image: tronxi/wordle-front:latest
+    env_file: .env
+    ports:
+      - "80:80"
+    networks: 
+      - wordle-net
+
+  wordle-service:
+    container_name: wordle-service
+    image: tronxi/wordle-service:latest
+    ports:
+      - "8080:8080"
+    env_file: .env
+    networks: 
+      - wordle-net
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    env_file: .env
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ./mysql:/var/lib/mysql
+    networks: 
+      - wordle-net
+
+networks: 
+    wordle-net:
